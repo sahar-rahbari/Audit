@@ -1,0 +1,90 @@
+
+Gas Optimazation repoort:
+
+
+According to the logic of the contract and according to the type of input data,   The Unchecked{} method can be used in the following lines: (The same issue for all below links:)
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/BytesUtils.sol#L56
+
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/DNSSECImpl.sol#L93
+
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/BytesUtils.sol#L266
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/BytesUtils.sol#L313
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/DNSSECImpl.sol#L93
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L24
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L54
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L235
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L241
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L310
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/ethregistrar/ETHRegistrarController.sol#L256
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/ethregistrar/StringUtils.sol#L14
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/wrapper/ERC1155Fuse.sol#L92
+
+--------------------------------------------------------------
+
+For gas optimization, it is better to use require instead of assert.
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L22
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/RRUtils.sol#L52
+
+
+
+----------------------------------------------------------------------
+It is better to use the same version of Solidity in this file to coordinate with other files of this project. That is, instead of using pragma solidity >=0.8.4; from pragma solidity ^0.8.4; to be used .
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/SHA1.sol#L1
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/ethregistrar/IETHRegistrarController.sol#L1
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/ethregistrar/ETHRegistrarController.sol#L1
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/ethregistrar/StringUtils.sol#L1
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/registry/ReverseRegistrar.sol#L1
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/registry/IReverseRegistrar.sol#L1
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/registry/IReverseRegistrar.sol#L1
+
+
+----------------------------------------------------------
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/ethregistrar/ETHRegistrarController.sol#L246
+
+
+It looks like require(duration >= MIN_REGISTRATION_DURATION);  had to  be before line 244 (delete (commitments[commitment]);).
+
+
+
+It is better to use the same version of Solidity in this file to coordinate with other files of this project. That is, 
+---------------------------------------------------------
+
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/DNSSECImpl.sol#L241
+
+According to the if instruction in lines 241, 248, 252, and 259, the combination of these lines can be written with only one if instruction.
+--------------------------------------------
+
+https://github.com/code-423n4/2022-07-ens/blob/ff6e59b9415d0ead7daf31c2ed06e86d9061ae22/contracts/dnssec-oracle/DNSSECImpl.sol#L310
+
+According to the if instruction in lines 310 and 313, the combination of these lines can be written with only one if instruction.
+
