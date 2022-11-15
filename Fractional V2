@@ -1,0 +1,64 @@
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/VaultFactory.sol#L63
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/VaultFactory.sol#L66
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/VaultFactory.sol#L77
+
+
+Because of MITM risk for using ntx.origin   using msg.sender instead of it is a better choice   
+
+_____________________________________________________________________
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/Vault.sol#L24
+
+Any user who is aware of the exact deployment time can call this function immediately after deploying the contract and put his address in the owner variable. Using special constructor function is a better option.
+___________________________________________________________
+https://github.com/code-423n4/2022-07-fractional/blob/e2c5a962a94106f9495eb96769d7f60f7d5b14c9/src/FERC1155.sol#L270
+
+If balanceOf[_from][_id] is less than _amount, then executing the statement balanceOf[_from][_id] -= _amount will fail.
+  
+_____________________________________________________________
+
+https://github.com/code-423n4/2022-07-fractional/blob/e2c5a962a94106f9495eb96769d7f60f7d5b14c9/src/modules/Buyout.sol#L125
+
+block.timestamp may be manipulated by miners.
+
+_____________________________________________________________
+https://github.com/code-423n4/2022-07-fractional/blob/e2c5a962a94106f9495eb96769d7f60f7d5b14c9/src/modules/Buyout.sol#L129
+
+It should be checked that the parameters of the safeTransferFrom function are correctly set, especially check that the id belongs to msg.sender.
+
+--------------------------------------------------------------------------------------------------------------
+
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/Vault.sol#L93
+
+
+If, for any reason, the old owner sends a wrong address to this function, there is no way to reverse the changes and modify the address again, and the entire contract is in jeopardy. Therefore, it is better to use a two-step method to change ownership. In the first step, the address of the new owner is sent to the contract and registered, and in the second step, the ownership request is sent through the same second address and the changes are made.
+
+Same issue is correct for the below code line too:
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/FERC1155.sol#L229
+
+
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/FERC1155.sol#L5
+
+Using the modified contract instead of the original and standard and audited  OpenZeppelin contract can bring risks. Especially the fact that the version of the compiler of this contract is different.  Same issue is correct for the below code line too:
+
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/utils/SafeSend.sol#L4
+
+
+
+https://github.com/code-423n4/2022-07-fractional/blob/8f2697ae727c60c93ea47276f8fa128369abfe51/src/FERC1155.sol#L96
+
+
+This comment line,[ the comment line before it, and the comment line after it] consider the  r and s  inputs as 64 bytes length and _v [The recovery ID]  is considered as the 129th byte. Where the standard definition of ecrecover  function is as follows:
+
+
+ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address): recover the address associated with the public key from elliptic curve signature or return zero on error. The function parameters correspond to ECDSA values of the signature: r = first 32 bytes of signature, s = second 32 bytes of signature, v = final 1 byte of signature. ecrecover returns an address, and not an address payable.
+
+
+ If any programming has been done with this logic,  had to recheck and test again
+______________________________________________________________________
+
